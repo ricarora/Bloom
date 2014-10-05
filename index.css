@@ -1,0 +1,11 @@
+* {
+	border:0;
+	margin:0;
+	padding:0;
+}
+
+img {
+    float: left;
+    clear:both;
+    background-color: #b0e0e6;
+}

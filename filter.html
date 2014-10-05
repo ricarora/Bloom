@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="index.css"/>
+	</head>
+	
+	<body>
+		<div class="query">
+			
+			<input type="text" id="query" placeholder="Enter search query, Location, Tag, ..."/>
+			<input type="button" value="Search" id="search"/>
+		
+		</div>
+		<div id="images"></div>
+		<script src="jquery.js"></script>
+		<script>
+			var startUps = new Array();
+			
+			$("#search").click(function() {
+			
+				$.getJSON("https://api.angel.co/1/search?query=\"" + $("#query").val() + "&callback=?", function(json){
+			
+					$('#images').empty();
+			
+					for(var index in json) {
+				
+						var img  = '<img src="' + json[index].pic +'" />';
+						var info = '<h1 class="title">' + json[index].name + '</h1>';
+						info += '<p class="details">' + json[index].url + '</p>';
+				
+				
+						$('#images').prepend(getHtml(img, info));
+					}
+			
+					console.log(startUps);
+				});
+			});
+			
+			function getHtml(img, info) {
+			
+				return "<div class=\"startup\">" + 
+				"<div class=\"imgs\">" + img + "</div>" + 
+				"<div class=\"info\">" + info + "</div>" + 
+				"</div>";
+			}
+			
+			function cleanupStartupData(s) {
+				return {
+					"name" : s.name,
+					"logo" : s.logo_url,
+					"desc" : s.product_desc,
+					"famt" : s.fundraising.raising_amount,
+					"ramt" : s.fundraising.raised_amount
+				}
+			}
+		</script>
+	</body>
+</html>
